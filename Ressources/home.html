@@ -8,6 +8,7 @@
         p = 'p'; //représente le personnage
         b = 'b'; //représente le chemin
         f = "f"; //représente le trophée
+        let NombreDePas= 0;
 
         xperso = 1; //position initial du personnage sur l'axe X
         yperso = 1; //postition initial du personnage sur l'axe Y
@@ -29,6 +30,14 @@
                 document.getElementById('timer').innerHTML = '<h1>Temps: ' + timer + 's</h1>';
             }
         }
+
+        function Pas() {
+            if (!checkWin()) {
+                NombreDePas++;
+                document.getElementById('nombredepas').innerHTML = '<h1>Nombres De Pas ' + NombreDePas  '</h1>';
+            }
+        }
+
 
         function checkWin(player) {
             let pos = true
@@ -59,24 +68,28 @@
                 if (laby[pos[0] - 1][pos[1]] != m && laby[pos[0] - 1][pos[1]] != null) {
                     laby[pos[0]][pos[1]] = b
                     laby[pos[0] - 1][pos[1]] = p
+                    Pas()
                     afficheLaby()
                 }
             } else if (direction == "gauche") {
                 if (laby[pos[0]][pos[1] - 1] != m && laby[pos[0]][pos[1] - 1] != null) {
                     laby[pos[0]][pos[1]] = b
                     laby[pos[0]][pos[1] - 1] = p
+                    Pas()
                     afficheLaby()
                 }
             } else if (direction == "droite") {
                 if (laby[pos[0]][pos[1] + 1] != m && laby[pos[0]][pos[1] + 1] != null) {
                     laby[pos[0]][pos[1]] = b
                     laby[pos[0]][pos[1] + 1] = p
+                    Pas()
                     afficheLaby()
                 }
             } else if (direction == "bas") {
                 if (laby[pos[0] + 1][pos[1]] != m && laby[pos[0] + 1][pos[1]] != null) {
                     laby[pos[0]][pos[1]] = b
                     laby[pos[0] + 1][pos[1]] = p
+                    Pas()
                     afficheLaby()
                 }
             }
@@ -149,14 +162,13 @@
 
 </div>
 
-<div id="timer">
-
-</div>
+<div id="timer"></div>
+<div id="nombredepas"></div>
 
 <input type="button" value="GO"
        onclick="afficheLaby(); if(timer == 0) setInterval(() => timerReload(), 1000);"><br/><BR><BR>
 
-<!-- ajouter vos boutons de déplacement ici -->
+
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp<input type="button" value="Haut"
                                                                               onclick="move('haut');"> <br><br>
