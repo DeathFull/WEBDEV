@@ -1,88 +1,98 @@
-<!doctype html> 
+<!doctype html>
 
 <html>
 <head>
     <title>Labyrinthe</title>
     <script language="JavaScript">
-        m='m'; //représente un mur
-        p='p'; //représente le personnage
-        b='b'; //représente le chemin
-        f="f"; //représente le trophée 
+        m = 'm'; //représente un mur
+        p = 'p'; //représente le personnage
+        b = 'b'; //représente le chemin
+        f = "f"; //représente le trophée
 
-        xperso=1; //position initial du personnage sur l'axe X
-        yperso=1; //postition initial du personnage sur l'axe Y
+        xperso = 1; //position initial du personnage sur l'axe X
+        yperso = 1; //postition initial du personnage sur l'axe Y
         //tableau à double entrée représentant votre labyrinthe, vous pouvez le modifier pour comprendre le fonctionnement
-        var laby = [[m,m,m,m,m,m,m,m,m,m],
-                    [m,p,m,b,b,b,b,b,b,m],
-                    [m,b,m,b,m,m,m,b,m,m],
-                    [m,b,m,b,m,b,m,b,b,m],
-                    [m,b,b,b,m,b,m,m,b,m],
-                    [m,b,m,b,m,b,b,b,b,f],
-                    [m,m,m,m,m,m,m,m,m,m]];
-     
-                  
-      
-         
+        var laby = [[m, m, m, m, m, m, b, m, m, m],
+            [m, p, m, b, b, b, b, b, b, m],
+            [b, b, m, b, m, b, m, b, m, m],
+            [b, m, m, b, m, b, m, b, b, m],
+            [b, m, b, b, m, b, m, m, b, m],
+            [b, m, m, b, m, b, b, m, b, f],
+            [b, b, b, b, m, m, b, m, m, m],
+            [m, m, m, b, m, m, b, m, m, m]];
+
+        function move(direction) {
+            if (direction == "gauche") {
+            } else if (direction == "droite") {
+
+            } else if (direction == "haut") {
+
+            } else if (direction == "bas") {
+
+            }
+
+
+        }
+
         function afficheLaby() //ne rien modifier dans cette fonction
         {
-            var leLaby=document.getElementById("laby");
-            insertion="<table border=0 cellspacing=0 cellpadding=0>";
-         
-         
-            for(i=0;i<7;i++)
-            {
-            insertion+="<tr>";
-                for(j=0;j<10;j++)
-                {
-                 
-                    if (laby[i][j]==m)
-                    {
-                    insertion+="<td>";
-                    insertion+="<img width='52'height='52' src='Assets/stonewall.png'>";
-                    insertion+="</td>";
+            var leLaby = document.getElementById("laby");
+            insertion = "<table border=0 cellspacing=0 cellpadding=0>";
+
+
+            for (i = 0; i < 7; i++) {
+                insertion += "<tr>";
+                for (j = 0; j < 10; j++) {
+
+                    if (laby[i][j] == m) {
+                        insertion += "<td>";
+                        insertion += "<img width='52'height='52' src='Assets/stonewall.png'>";
+                        insertion += "</td>";
                     }
-                    if (laby[i][j]==p)
-                    {
-                    insertion+="<td>";
-                    insertion+="<img width='52' height='52' style='background-image:Assets/Ground.png' src='Assets/Heros.png'>";
-                    insertion+="</td>";
+                    if (laby[i][j] == p) {
+                        insertion += "<td>";
+                        insertion += "<img width='52' height='52' style='background-image:Assets/Ground.png' src='Assets/Heros.png'>";
+                        insertion += "</td>";
                     }
-                    if (laby[i][j]==b)
-                    {
-                    insertion+="<td>";
-                    insertion+="<img width='52' height='52' src='Assets/Ground.png'>";
-                    insertion+="</td>";
+                    if (laby[i][j] == b) {
+                        insertion += "<td>";
+                        insertion += "<img width='52' height='52' src='Assets/Ground.png'>";
+                        insertion += "</td>";
                     }
 
-                     
-                    if (laby[i][j]==f)
-                    {
-                    insertion+="<td>";
-                    insertion+="<img width='52' height='52'src='Assets/Trophy.png'>";
-                    insertion+="</td>";
+
+                    if (laby[i][j] == f) {
+                        insertion += "<td>";
+                        insertion += "<img width='52' height='52'src='Assets/Trophy.png'>";
+                        insertion += "</td>";
                     }
-                     
-             
-                     
+
+
                 }
-                insertion+="</tr>";
-            }  
-             
-            insertion+="</table>";
-            leLaby.innerHTML=insertion;
+                insertion += "</tr>";
+            }
+
+            insertion += "</table>";
+            leLaby.innerHTML = insertion;
+
         }
-         
+
     </script>
 </head>
-    <body>
-        <div id="laby">
- 
-        </div>
+<body>
+<div id="laby">
 
-    <input type="button" value="GO" onclick="afficheLaby();"><br/><BR><BR>
+</div>
 
-    <!-- ajouter vos boutons de déplacement ici -->
+<input type="button" value="GO" onclick="afficheLaby();"><br/><BR><BR>
 
- 
+<!-- ajouter vos boutons de déplacement ici -->
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp<input type="button" value="Haut" onclick="move('haut');"> <br><br>
+<input type="button" value="Gauche" onclick="move('gauche');">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<input type="button" value="Droite" onclick="move('droite');"><br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<input type="button" value="Bas" onclick="move('bas');">
+
+
 </body>
 </html>
