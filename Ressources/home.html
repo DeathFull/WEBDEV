@@ -21,17 +21,65 @@
             [b, b, b, b, m, m, b, m, m, m],
             [m, m, m, b, m, m, b, m, m, m]];
 
-        function move(direction) {
-            if (direction == "gauche") {
-            } else if (direction == "droite") {
+        let timer = 0;
 
-            } else if (direction == "haut") {
+        function timerReload() {
+            if (!checkWin()) {
+                timer++;
+                document.getElementById('timer').innerHTML = '<h1>Temps: ' + timer + 's</h1>';
+            }
+        }
 
-            } else if (direction == "bas") {
-
+        function checkWin(player) {
+            let pos = true
+            for (i = 0; i < 7; i++) {
+                for (j = 0; j < 10; j++) {
+                    if (laby[i][j] == "f") {
+                        pos = false
+                        break;
+                    }
+                }
             }
 
+            return pos;
+        }
 
+        function move(direction) {
+            let pos
+            for (i = 0; i < 7; i++) {
+                for (j = 0; j < 10; j++) {
+                    if (laby[i][j] == "p") {
+                        pos = [i, j]
+                        break;
+                    }
+                }
+            }
+
+            if (direction == "haut") {
+                if (laby[pos[0] - 1][pos[1]] != m && laby[pos[0] - 1][pos[1]] != null) {
+                    laby[pos[0]][pos[1]] = b
+                    laby[pos[0] - 1][pos[1]] = p
+                    afficheLaby()
+                }
+            } else if (direction == "gauche") {
+                if (laby[pos[0]][pos[1] - 1] != m && laby[pos[0]][pos[1] - 1] != null) {
+                    laby[pos[0]][pos[1]] = b
+                    laby[pos[0]][pos[1] - 1] = p
+                    afficheLaby()
+                }
+            } else if (direction == "droite") {
+                if (laby[pos[0]][pos[1] + 1] != m && laby[pos[0]][pos[1] + 1] != null) {
+                    laby[pos[0]][pos[1]] = b
+                    laby[pos[0]][pos[1] + 1] = p
+                    afficheLaby()
+                }
+            } else if (direction == "bas") {
+                if (laby[pos[0] + 1][pos[1]] != m && laby[pos[0] + 1][pos[1]] != null) {
+                    laby[pos[0]][pos[1]] = b
+                    laby[pos[0] + 1][pos[1]] = p
+                    afficheLaby()
+                }
+            }
         }
 
         function afficheLaby() //ne rien modifier dans cette fonction
@@ -84,18 +132,14 @@
             e = e || window.event;
 
             if (e.keyCode == '38') {
-                move('up')
+                move('haut')
+            } else if (e.keyCode == '40') {
+                move('bas')
+            } else if (e.keyCode == '37') {
+                move('gauche')
+            } else if (e.keyCode == '39') {
+                move('droite')
             }
-            else if (e.keyCode == '40') {
-                move('down')
-            }
-            else if (e.keyCode == '37') {
-                move('left')
-            }
-            else if (e.keyCode == '39') {
-                move('right')
-            }
-
         }
 
     </script>
@@ -105,7 +149,12 @@
 
 </div>
 
-<input type="button" value="GO" onclick="afficheLaby();"><br/><BR><BR>
+<div id="timer">
+
+</div>
+
+<input type="button" value="GO"
+       onclick="afficheLaby(); if(timer == 0) setInterval(() => timerReload(), 1000);"><br/><BR><BR>
 
 <!-- ajouter vos boutons de déplacement ici -->
 
@@ -114,7 +163,6 @@
 <input type="button" value="Gauche" onclick="move('gauche');">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <input type="button" value="Droite" onclick="move('droite');"><br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <input type="button" value="Bas" onclick="move('bas');">
-
 
 
 </body>
