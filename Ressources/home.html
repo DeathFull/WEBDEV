@@ -13,14 +13,14 @@
         xperso = 1; //position initial du personnage sur l'axe X
         yperso = 1; //postition initial du personnage sur l'axe Y
         //tableau à double entrée représentant votre labyrinthe, vous pouvez le modifier pour comprendre le fonctionnement
-        var laby = [[m, m, m, m, m, m, b, m, m, m],
-            [m, p, m, b, b, b, b, b, b, m],
-            [b, b, m, b, m, b, m, b, m, m],
-            [b, m, m, b, m, b, m, b, b, m],
-            [b, m, b, b, m, b, m, m, b, m],
-            [b, m, m, b, m, b, b, m, b, f],
-            [b, b, b, b, m, m, b, m, m, m],
-            [m, m, m, b, m, m, b, m, m, m]];
+        var laby = [[m, m, m, m, m, m, m, m, m, m],
+            [m, p, m, b, b, b, b, b, m, m],
+            [b, b, m, b, m, m, m, b, m, m],
+            [b, m, m, b, m, m, m, b, b, m],
+            [b, m, m, b, m, m, m, m, b, m],
+            [b, m, m, b, m, m, m, m, b, f],
+            [b, b, b, b, m, m, m, m, m, m],
+            [m, m, m, m, m, m, m, m, m, m]];
 
         let timer = 0;
 
@@ -39,32 +39,32 @@
         }
 
 
-        function checkWin(player) {
-            let pos = true
+        function checkWin() {
+            let win = true
             for (i = 0; i < 8; i++) {
                 for (j = 0; j < 10; j++) {
                     if (laby[i][j] == "f") {
-                        pos = false
-                        break;
+                        win = false
                     }
                 }
             }
+            return win
+        }
 
-            return pos;
+        function checkPos() {
+            for (i = 0; i < laby.length; i++) {
+                for (j = 0; j < laby[i].length; j++) {
+                    if (laby[i][j] == "p") {
+                        return [i, j]
+                    }
+                }
+            }
         }
 
         function move(direction) {
             if (checkWin()) return;
 
-            let pos
-            for (i = 0; i < laby.length; i++) {
-                for (j = 0; j < laby[i].length; j++) {
-                    if (laby[i][j] == "p") {
-                        pos = [i, j]
-                        break;
-                    }
-                }
-            }
+            let pos = checkPos()
 
             if (direction == "haut") {
                 if (laby[pos[0] - 1][pos[1]] != m && laby[pos[0] - 1][pos[1]] != null) {
@@ -73,6 +73,7 @@
                     Pas()
                     afficheLaby()
                 }
+                return;
             } else if (direction == "gauche") {
                 if (laby[pos[0]][pos[1] - 1] != m && laby[pos[0]][pos[1] - 1] != null) {
                     laby[pos[0]][pos[1]] = b
@@ -80,6 +81,7 @@
                     Pas()
                     afficheLaby()
                 }
+                return;
             } else if (direction == "droite") {
                 if (laby[pos[0]][pos[1] + 1] != m && laby[pos[0]][pos[1] + 1] != null) {
                     laby[pos[0]][pos[1]] = b
@@ -87,6 +89,7 @@
                     Pas()
                     afficheLaby()
                 }
+                return;
             } else if (direction == "bas") {
                 if (laby[pos[0] + 1][pos[1]] != m && laby[pos[0] + 1][pos[1]] != null) {
                     laby[pos[0]][pos[1]] = b
@@ -94,24 +97,51 @@
                     Pas()
                     afficheLaby()
                 }
+
+            }
+        }
+
+        let lastpos = []
+
+        function autoMove() {
+            if (checkWin()) return;
+
+            let pos = checkPos()
+
+            if (laby[pos[0] + 1][pos[1]] != m && laby[pos[0] + 1][pos[1]] != null && lastpos[0] != pos[0] + 1) {
+                laby[pos[0]][pos[1]] = b
+                laby[pos[0] + 1][pos[1]] = p
+                lastpos = [pos[0], pos[1]]
+                Pas()
+                afficheLaby()
+            } else if (laby[pos[0] - 1][pos[1]] != m && laby[pos[0] - 1][pos[1]] != null && lastpos[0] != pos[0] - 1) {
+                laby[pos[0]][pos[1]] = b
+                laby[pos[0] - 1][pos[1]] = p
+                lastpos = [pos[0], pos[1]]
+                Pas()
+                afficheLaby()
+            } else if (laby[pos[0]][pos[1] + 1] != m && laby[pos[0]][pos[1] + 1] != null && lastpos[1] != pos[1] + 1) {
+                laby[pos[0]][pos[1]] = b
+                laby[pos[0]][pos[1] + 1] = p
+                lastpos = [pos[0], pos[1]]
+                Pas()
+                afficheLaby()
+            } else if (laby[pos[0]][pos[1] - 1] != m && laby[pos[0]][pos[1] - 1] != null && lastpos[1] != pos[1] - 1) {
+                laby[pos[0]][pos[1]] = b
+                laby[pos[0]][pos[1] - 1] = p
+                lastpos = [pos[0], pos[1]]
+                Pas()
+                afficheLaby()
             }
         }
 
         function mouseMove(bposy, bposx) {
             if (checkWin()) return;
 
-            let pos
-            for (i = 0; i < laby.length; i++) {
-                for (j = 0; j < laby[i].length; j++) {
-                    if (laby[i][j] == "p") {
-                        pos = [i, j]
-                        break;
-                    }
-                }
-            }
+            let pos = checkPos()
 
-            if ((bposy-1 == pos[0] && bposx == pos[1]) || (bposy+1 == pos[0] && bposx == pos[1]) ||
-                (bposy == pos[0] && bposx-1 == pos[1]) || (bposy == pos[0] && bposx+1 == pos[1])) {
+            if ((bposy - 1 == pos[0] && bposx == pos[1]) || (bposy + 1 == pos[0] && bposx == pos[1]) ||
+                (bposy == pos[0] && bposx - 1 == pos[1]) || (bposy == pos[0] && bposx + 1 == pos[1])) {
                 laby[pos[0]][pos[1]] = b
                 laby[bposy][bposx] = p
                 Pas()
@@ -187,7 +217,9 @@
 <div id="timer"></div>
 
 <input type="button" value="GO"
-       onclick="afficheLaby(); if(timer == 0) setInterval(() => timerReload(), 1000);"><br/><BR><BR>
+       onclick="afficheLaby(); if(timer == 0) setInterval(() => timerReload(), 1000);"><br><br>
+<input type="button" value="Auto"
+       onclick="setInterval(() => autoMove(), 1);"><br><BR><BR>
 
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp<input type="button" value="Haut"
