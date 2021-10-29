@@ -73,6 +73,7 @@
                     Pas()
                     afficheLaby()
                 }
+                return;
             } else if (direction == "gauche") {
                 if (laby[pos[0]][pos[1] - 1] != m && laby[pos[0]][pos[1] - 1] != null) {
                     laby[pos[0]][pos[1]] = b
@@ -80,6 +81,7 @@
                     Pas()
                     afficheLaby()
                 }
+                return;
             } else if (direction == "droite") {
                 if (laby[pos[0]][pos[1] + 1] != m && laby[pos[0]][pos[1] + 1] != null) {
                     laby[pos[0]][pos[1]] = b
@@ -87,6 +89,7 @@
                     Pas()
                     afficheLaby()
                 }
+                return;
             } else if (direction == "bas") {
                 if (laby[pos[0] + 1][pos[1]] != m && laby[pos[0] + 1][pos[1]] != null) {
                     laby[pos[0]][pos[1]] = b
@@ -94,6 +97,7 @@
                     Pas()
                     afficheLaby()
                 }
+
             }
         }
 
