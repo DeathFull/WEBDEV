@@ -57,8 +57,8 @@
             if (checkWin()) return;
 
             let pos
-            for (i = 0; i < 8; i++) {
-                for (j = 0; j < 10; j++) {
+            for (i = 0; i < laby.length; i++) {
+                for (j = 0; j < laby[i].length; j++) {
                     if (laby[i][j] == "p") {
                         pos = [i, j]
                         break;
@@ -97,6 +97,28 @@
             }
         }
 
+        function mouseMove(bposy, bposx) {
+            if (checkWin()) return;
+
+            let pos
+            for (i = 0; i < laby.length; i++) {
+                for (j = 0; j < laby[i].length; j++) {
+                    if (laby[i][j] == "p") {
+                        pos = [i, j]
+                        break;
+                    }
+                }
+            }
+
+            if ((bposy-1 == pos[0] && bposx == pos[1]) || (bposy+1 == pos[0] && bposx == pos[1]) ||
+                (bposy == pos[0] && bposx-1 == pos[1]) || (bposy == pos[0] && bposx+1 == pos[1])) {
+                laby[pos[0]][pos[1]] = b
+                laby[bposy][bposx] = p
+                Pas()
+                afficheLaby()
+            }
+        }
+
         function afficheLaby() //ne rien modifier dans cette fonction
         {
             var leLaby = document.getElementById("laby");
@@ -119,14 +141,14 @@
                     }
                     if (laby[i][j] == b) {
                         insertion += "<td>";
-                        insertion += "<img width='52' height='52' src='Assets/Ground.png'>";
+                        insertion += "<img onclick='mouseMove(" + i + "," + j + ");' width='52' height='52' src='Assets/Ground.png'>";
                         insertion += "</td>";
                     }
 
 
                     if (laby[i][j] == f) {
                         insertion += "<td>";
-                        insertion += "<img width='52' height='52'src='Assets/Trophy.png'>";
+                        insertion += "<img onclick='mouseMove(" + i + "," + j + ");' width='52' height='52'src='Assets/Trophy.png'>";
                         insertion += "</td>";
                     }
 
